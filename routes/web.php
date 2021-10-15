@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Link;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,22 @@ Route::get('/', function () {
     return view('welcome', [
         'links' => $links
     ]);
+});
+
+Route::get('/submit', function () {
+    return view('submit');
+});
+
+Route::post('/submit', function (Request $request) {
+    $data = $request->validate([
+        'title' => ['required', 'max:255'],
+        'url' => ['required', 'url', 'max:255'],
+        'description' => ['required', 'max:255']
+    ]);
+
+    (new Link($data))->save();
+
+    return redirect('/');
 });
 
 Auth::routes();
