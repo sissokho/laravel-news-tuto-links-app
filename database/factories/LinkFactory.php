@@ -22,7 +22,9 @@ class LinkFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => substr($this->faker->sentence(2), 0, -1),
+            'url' => $this->faker->url,
+            'description' => $this->faker->paragraph()
         ];
     }
 }
